@@ -25,8 +25,6 @@
     folder_path = 'your path to folder'
     ```
 ### HTTP tunneling
-    1.  If you want to make your web page accessible to any user, you can use the ngrok utility. [Ngrok](https://ngrok.com/) creates a tunnel between your computer and a remote server and provides access to it from a unique domain (address), which it generates itself.
-    
-    1.  Go to the official Ngrok website - https://ngrok.com/
-    1.  We register on the website and confirm the email. It's free
-    1.  Download the archive from ngrok for your version of the operating system. In my case, it's Windows 10 64-bit.
+If you want to make your web page accessible to any user, you can use the ngrok utility. [Ngrok](https://ngrok.com/) creates a tunnel between your computer and a remote server and provides access to it from a unique domain (address), which it generates itself.
+
+[Instruction](https://habr.com/ru/articles/697620/)
