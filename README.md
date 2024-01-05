@@ -1,5 +1,9 @@
 # CrashMap
----
+
+## Description
+
+With this project, you will be able to view the accidents that occurred in the region you are interested in, analyze them using PostgreSQL. The map will display detailed information about the accident, such as the make and year of manufacture of the car
+
 ## Getting Started
 
 1.  Install libraries:
@@ -11,6 +15,7 @@
     pip install numpy
     pip install folium 
     ```
+1.  Download test.xls from this repo
 
 ### Database Configuration
 
