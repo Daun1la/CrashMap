@@ -1,6 +1,5 @@
 # CrashMap
 
-![image info](9a73d3dc-0616-4d47-8b93-f13fca8c0057.jpg)
 ## Description
 
 With this project, you will be able to view the accidents that occurred in the region you are interested in, analyze them using PostgreSQL. The map will display detailed information about the accident, such as the make and year of manufacture of the car
