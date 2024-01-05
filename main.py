@@ -2,12 +2,12 @@ import psycopg2
 import os
 import pandas as pd
 import numpy as np
-from config import host, user, password, db_name, folder_path
+from config import host, user, password, db_name, folder_path # Make config file with your parameters if you want connect to postgreSQL
 from flask import Flask, render_template_string
 import folium
 
 # Initialization
-folder_path = folder_path
+folder_path = folder_path # your folder path
 data_to_insert = []
 descrip_value =''
 level_value = 0
@@ -69,7 +69,7 @@ for data in data_to_insert:
 # Uncomment this section if you want connect to PostgreSQL
 # try:
 #     connection = psycopg2.connect(
-#         host=host,
+#         host=host, 
 #         user=user,
 #         password=password,
 #         database=db_name
