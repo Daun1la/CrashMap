@@ -5,6 +5,8 @@ import numpy as np
 from config import host, user, password, db_name, folder_path # Make config file with your parameters if you want connect to postgreSQL
 from flask import Flask, render_template_string
 import folium
+from folium.plugins import MarkerCluster
+import random
 
 # Initialization
 folder_path = folder_path # your folder path
@@ -16,6 +18,7 @@ search_value_1 = 'Марка/модель ТС'
 search_value_2 = 'Год выпуска'
 count = 0
 data_to_insert = []
+colour = ''
 
 #Check all files in the folder
 for file_name in os.listdir(folder_path):
@@ -141,16 +144,30 @@ for data in data_to_insert:
 app = Flask(__name__)
 
 @app.route("/")
+
 def home():
     """Create a map object"""
     mapObj = folium.Map(location=[data_to_insert[0]['x_coord'], data_to_insert[0]['y_coord']],
-                        zoom_start=8, width=1860, height=960)
-
+                        zoom_start=8, width='100%', height='100%')
+    marker_cluster = MarkerCluster().add_to(mapObj)
     # add a marker to the map object
     for c in data_to_insert:
         popup_text = f"<b>Дата:</b> {c['Date']}<br><b>Время:</b> {c['Time']}<br><b>Происшествие:</b> {c['Type']}<br><b>Описание:</b> {c['Desc']}<br><b>Модель:</b> <i>{c['Model']}</i><br><b>Год выпуска:</b> {c['RY']}<br><b>Покрытие:</b> {c['Cond_of_Road']}"
-        folium.Marker([float(c['x_coord']), float(c['y_coord'])], popup=folium.Popup(popup_text, max_width=200)).add_to(mapObj)
 
+        if (c['RY'] == 0):
+            colour = 'gray'
+        elif (0 < c['RY'] < 2005):
+            colour = 'red'
+        elif (2005 <= c['RY'] < 2018):
+            colour = 'orange'
+        else:
+            colour = 'green'
+        
+        noise_x = random.uniform(-0.0004, 0.0004)  # Generation random noise
+        noise_y = random.uniform(-0.0004, 0.0004)
+        folium.CircleMarker([float(c['x_coord']) + noise_x, float(c['y_coord']) + noise_y], popup=folium.Popup(popup_text, max_width=200), 
+                      radius = 7, fill_opacity = 0.9, fill_color = colour, color = 'black').add_to(marker_cluster)
+  
     # render the map object
     mapObj.get_root().render()
 
@@ -168,8 +185,8 @@ def home():
                     {{ header|safe }}
                 </head>
                 <body>
-                    <div style="position: fixed; top: 20px; right: 20px; background-color: #f2f2f2; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: Arial, sans-serif; font-size: 14px; color: #333; z-index: 1000;">
-                        <p style="margin: 0;">При отсутствии данных в поле Год выпуска ставится 0</p>
+                    <div style="position: fixed; top: 20px; right: 20px; background-color: #f2f2f2; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: Arial, sans-serif; font-size: 12px; color: #333; z-index: 1000;">
+                        <p style="margin: 0;">Серым цветом обображается<br>неизвестный год выпуска авто<br>Красным - моложе 2005г.<br>Желтым - моложе 2018г.<br>Зеленым - все остальное</p>
                     </div>
                     <div id="map" style="height: 100%; width: 100%;"></div>
                     {{ body_html|safe }}
