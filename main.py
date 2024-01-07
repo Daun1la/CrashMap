@@ -149,7 +149,7 @@ def home():
     """Create a map object"""
     mapObj = folium.Map(location=[data_to_insert[0]['x_coord'], data_to_insert[0]['y_coord']],
                         zoom_start=8, width='100%', height='100%')
-    marker_cluster = MarkerCluster().add_to(mapObj)
+    #marker_cluster = MarkerCluster().add_to(mapObj)
     # add a marker to the map object
     for c in data_to_insert:
         popup_text = f"<b>Дата:</b> {c['Date']}<br><b>Время:</b> {c['Time']}<br><b>Происшествие:</b> {c['Type']}<br><b>Описание:</b> {c['Desc']}<br><b>Модель:</b> <i>{c['Model']}</i><br><b>Год выпуска:</b> {c['RY']}<br><b>Покрытие:</b> {c['Cond_of_Road']}"
@@ -166,7 +166,7 @@ def home():
         noise_x = random.uniform(-0.0004, 0.0004)  # Generation random noise
         noise_y = random.uniform(-0.0004, 0.0004)
         folium.CircleMarker([float(c['x_coord']) + noise_x, float(c['y_coord']) + noise_y], popup=folium.Popup(popup_text, max_width=200), 
-                      radius = 7, fill_opacity = 0.9, fill_color = colour, color = 'black').add_to(marker_cluster)
+                      radius = 6, fill_opacity = 0.9, fill_color = colour, color = 'black').add_to(mapObj)
   
     # render the map object
     mapObj.get_root().render()
